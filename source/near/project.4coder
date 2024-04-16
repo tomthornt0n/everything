@@ -1,0 +1,82 @@
+version(1);
+
+project_name = "near";
+
+patterns =
+{
+    "*.c",
+    "*.h",
+    "*.bat",
+    "*.sh",
+    "*.4coder",
+    "*.txt",
+    "*.mdesk",
+};
+
+blacklist_patterns =
+{
+    ".*",
+};
+
+load_path_near = { .path = ".", .recursive = False, .relative = True };
+load_path_base = { .path = "../base", .recursive = False, .relative = True };
+load_path_os = { .path = "../os", .recursive = False, .relative = True };
+load_path_graphics = { .path = "../graphics", .recursive = False, .relative = True };
+load_path_audio = { .path = "../audio", .recursive = False, .relative = True };
+load_path_renderer_2d = { .path = "../renderer_2d", .recursive = False, .relative = True };
+load_path_renderer_line = { .path = "../renderer_line", .recursive = False, .relative = True };
+load_path_draw = { .path = "../draw", .recursive = False, .relative = True };
+load_path_font = { .path = "../font", .recursive = False, .relative = True };
+load_path_ui = { .path = "../ui", .recursive = False, .relative = True };
+load_path_img = { .path = "../img", .recursive = False, .relative = True };
+
+load_paths =
+{
+    { { load_path_base, load_path_os, load_path_graphics, load_path_audio, load_path_renderer_2d, load_path_renderer_line, load_path_draw, load_path_font, load_path_ui, load_path_near, load_path_img }, .os = "win" },
+};
+
+command_list =
+{
+    {
+        .name = "build",
+        .out = "*compilation*",
+        .footer_panel = True,
+        .save_dirty_files = True,
+        .cursor_at_end = False,
+        .cmd =
+        {
+            { "echo 'no linux support yet'", .os = "linux" },
+            { "near_build.bat", .os = "win" },
+        },
+    },
+    
+    {
+        .name = "run",
+        .out = "*compilation*",
+        .footer_panel = True,
+        .save_dirty_files = True,
+        .cursor_at_end = False,
+        .cmd =
+        {
+            { "echo 'no linux support yet'", .os = "linux" },
+            { "pushd ..\..\build && near_manager_debug.exe && popd", .os = "win" },
+        },
+    },
+    
+    {
+        .name = "run_release",
+        .out = "*compilation*",
+        .footer_panel = True,
+        .save_dirty_files = True,
+        .cursor_at_end = False,
+        .cmd =
+        {
+            { "echo 'no linux support yet'", .os = "linux" },
+            { "pushd ..\..\build && near_manager.exe && popd", .os = "win" },
+        },
+    },
+};
+
+fkey_command[1] = "build";
+fkey_command[2] = "run";
+fkey_command[3] = "run_release";
