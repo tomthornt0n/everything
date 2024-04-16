@@ -272,15 +272,13 @@ WindowHookDraw(OpaqueHandle window)
     G_EventQueue *events = G_WindowEventQueueGet(window);
     V2F mouse_position = G_WindowMousePositionGet(window);
     
-    V2F canvas_size = Scale2F(V2F(BitmapWidth, BitmapHeight), 0.5f);
-    /*
+    V2F canvas_size = V2F(BitmapWidth, BitmapHeight);
     V2F max_canvas_size = Scale2F(client_rect.max, 0.7f / s);
     while(2.0f*canvas_size.x < max_canvas_size.x &&
           2.0f*canvas_size.y < max_canvas_size.y)
     {
         canvas_size = Scale2F(canvas_size, 2.0f);
     }
-*/
     V2F canvas_pos = Scale2F(Sub2F(Measure2F(client_rect), Mul2F(canvas_size, V2F(2.0f, 2.0f))), 0.5f);
     Range2F canvas_rect = RectMake2F(canvas_pos, canvas_size);
     R2D_Quad canvas_quad =
@@ -316,6 +314,11 @@ WindowHookDraw(OpaqueHandle window)
         S8ListFromUITree(scratch.arena, ui_tree, &ui_string_list, 0);
         ui_string = S8ListJoin(tree_arena, ui_string_list);
         ArenaTempEnd(scratch);
+    }
+    
+    if(G_EventQueueHasKeyDown(events, G_Key_C, G_ModifierKeys_Ctrl, True))
+    {
+        OS_ClipboardTextSet(ui_string);
     }
     
     if(pen)
